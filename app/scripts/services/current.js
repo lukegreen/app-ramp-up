@@ -7,17 +7,19 @@
  * # current
  * Factory in the appRampUpApp.
  */
-angular.module('appRampUpApp')
-  .factory('current', function () {
-    // Service logic
-    // ...
+ angular.module('appRampUpApp')
+   .factory('current', function ($resource) {
+     // Service logic
+     // ...
 
-    var meaningOfLife = 42;
-
-    // Public API here
-    return {
-      someMethod: function () {
-        return meaningOfLife;
-      }
-    };
-  });
+     // Public API here
+     return $resource('http://api.openweathermap.org/data/2.5/weather?q=:location&units=imperial&APPID=367aab07d8857e63a96da15a80673c77', {}, {
+       query: {
+         method:'GET',
+         params:{
+           location: 'Seattle,us'
+         },
+         isArray:false
+       }
+     });
+   });
