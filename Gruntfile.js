@@ -286,21 +286,20 @@ sass: {
     // concat, minify and revision files. Creates configurations in memory so
     // additional tasks can operate on them
     useminPrepare: {
-      html: '<%= yeoman.app %>/index.html',
-      options: {
-        dest: '<%= yeoman.dist %>',
-        flow: {
-          html: {
-            steps: {
-              js: ['concat', 'uglifyjs'],
-              css: ['cssmin']
-            },
-            post: {}
+        html: '<%= yeoman.app %>/index.html',
+        options: {
+          dest: '<%= yeoman.dist %>',
+          flow: {
+            html: {
+              steps: {
+                js: ['concat', 'uglifyjs'],
+                css: []
+              },
+              post: {}
+            }
           }
         }
-      }
-    },
-
+      },
     // Performs rewrites based on filerev and the useminPrepare configuration
     usemin: {
       html: ['<%= yeoman.dist %>/{,*/}*.html'],
@@ -437,6 +436,11 @@ sass: {
           src: ['generated/*']
         }, {
           expand: true,
+          cwd: '.tmp/styles',
+          dest: '<%= yeoman.dist %>/styles',
+          src: ['*.css']
+        }, {
+          expand: true,
           cwd: '.',
           src: 'bower_components/bootstrap-sass-official/assets/fonts/bootstrap/*',
           dest: '<%= yeoman.dist %>'
@@ -449,7 +453,6 @@ sass: {
         src: '{,*/}*.css'
       }
     },
-
     // Run some tasks in parallel to speed up the build process
 concurrent: {
   server: [
@@ -516,13 +519,13 @@ concurrent: {
     'ngAnnotate',
     'copy:dist',
     'cdnify',
-    'cssmin',
+    // 'cssmin',
     'uglify',
     'filerev',
     'usemin',
     'htmlmin'
   ]);
-
+  
   grunt.registerTask('default', [
     'newer:jshint',
     'newer:jscs',
