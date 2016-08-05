@@ -8,16 +8,18 @@
  * Factory in the appRampUpApp.
  */
 angular.module('appRampUpApp')
-  .factory('citysearch', function () {
+  .factory('citysearch', function ($resource) {
     // Service logic
     // ...
 
-    var meaningOfLife = 42;
-
     // Public API here
-    return {
-      someMethod: function () {
-        return meaningOfLife;
+    return $resource('http://api.openweathermap.org/data/2.5/find?q=:query&units=imperial&type=like&mode=json&APPID=367aab07d8857e63a96da15a80673c77', {}, {
+      find: {
+        method:'GET',
+        params:{
+          query: 'Seattle'
+        },
+        isArray:false
       }
-    };
+    });
   });
